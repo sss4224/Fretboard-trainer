@@ -10,16 +10,18 @@ const strings = ['E', 'A', 'D', 'G', 'B'];
 
 let fretNum;
 let isFlat = flatCheck();
+let playString;
+let playNote;
+let rotateArray;
 
 nextBtnEl.addEventListener('click', () => {
     inputEl.style.borderColor = '';
     inputEl.value = '';
-    isFlat = flatCheck();
-    const playString = strings[randomNumGen(strings.length)];
-    const playNote = isFlat[randomNumGen(isFlat.length)];
-    const rotateArray = rotateNotes(playString);
+    playString = strings[randomNumGen(strings.length)];
+    playNote = isFlat[randomNumGen(isFlat.length)];
+    rotateArray = rotateNotes(playString);
     fretNum = rotateArray.indexOf(playNote);
-    textEl.textContent = `String: ${playString} Note: ${playNote}`;
+    textChanger(playString, playNote);
 })
 
 checkEl.addEventListener('click', () => {
@@ -44,14 +46,18 @@ function randomNumGen(arrayLength){
 function rotateNotes(startNote) {
   const notes = isFlat;
   const startIndex = notes.indexOf(startNote);
-  
-  if (startIndex === -1) {
-    throw new Error("Noten finnes ikke i arrayen");
-  }
 
   // "Slice" arrayen fra start og legg til resten foran
   return notes.slice(startIndex).concat(notes.slice(0, startIndex));
 }
+
+flatCheckEl.addEventListener('change', () => {
+    isFlat = flatCheck();
+    rotateArray = rotateNotes(playString);
+    playNote = rotateArray[fretNum];
+    
+    textChanger(playString, playNote);
+})
 
 function flatCheck(){
     if(flatCheckEl.checked){
@@ -60,4 +66,8 @@ function flatCheck(){
     else{
         return ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     }
+}
+
+function textChanger(string, note){
+    textEl.textContent = `String: ${string} Note: ${note}`;
 }
