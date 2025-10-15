@@ -1,22 +1,29 @@
 
-const textEl = document.querySelector('p');
-const inputEl = document.querySelector('input');
+const textEl = document.querySelector('.question-text');
+const answerMsg = document.querySelector('.answer-msg');
+const inputEl = document.querySelector('#guess-input');
 const checkEl = document.querySelector('.check-btn');
 const nextBtnEl = document.querySelector('.next-btn');
 const flatCheckEl = document.querySelector('#flat');
+const stringCheckboxEl = document.querySelectorAll('.strings');
+const stringInputEl = document.querySelectorAll('.string-name');
+const saveBtn = document.querySelector('.save-btn');
 
 // Strings on the guitar
-const strings = ['E', 'A', 'D', 'G', 'B'];
 
-let fretNum;
+let fretNum = null;
+let playString = null;
+let playNote = null;
+let rotateArray = null;
 let isFlat = flatCheck();
-let playString;
-let playNote;
-let rotateArray;
+let strings = checkActiveStrings();
 
 nextBtnEl.addEventListener('click', () => {
+    //Reset styles and values
+    answerMsg.style.display = 'none';
     inputEl.style.borderColor = '';
     inputEl.value = '';
+
     playString = strings[randomNumGen(strings.length)];
     playNote = isFlat[randomNumGen(isFlat.length)];
     rotateArray = rotateNotes(playString);
@@ -26,16 +33,14 @@ nextBtnEl.addEventListener('click', () => {
 
 checkEl.addEventListener('click', () => {
     const val = Number(inputEl.value);
-    if(val === '' || val < 0 || val > 24){
-        inputEl.style.borderColor = 'red';
+    if(inputEl.value === '' || val < 0 || val > 24){
+        answerFeedback(false, false);
     }
     else if(val === fretNum || val % 12 === fretNum){
-        textEl.textContent = `RIKTIG!`;
-        inputEl.style.borderColor = 'lightgreen';
+        answerFeedback(true, true);
     }
     else{
-        textEl.textContent = `Feil! Rett svar var ${fretNum}`;
-        inputEl.style.borderColor = 'red';
+        answerFeedback(false, true);
     }
 })
 
@@ -59,6 +64,27 @@ flatCheckEl.addEventListener('change', () => {
     textChanger(playString, playNote);
 })
 
+saveBtn.addEventListener('click', () => {
+    strings = checkActiveStrings();
+})
+
+function checkActiveStrings(){
+
+    const activeStrings = [];
+
+    stringCheckboxEl.forEach((checkbox, index) => {
+        if(checkbox.checked){
+            const stringValue = stringInputEl[index].value;
+            activeStrings.push(stringValue);
+        }
+    })
+    return activeStrings;
+}
+
+function checkTuning(){
+    
+}
+
 function flatCheck(){
     if(flatCheckEl.checked){
         return ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -70,4 +96,23 @@ function flatCheck(){
 
 function textChanger(string, note){
     textEl.textContent = `String: ${string} Note: ${note}`;
+}
+
+function answerFeedback(answer, text){
+    if(!text){
+        inputEl.style.borderColor = 'red';
+        return;
+    }
+    if(answer){
+        answerMsg.textContent = 'RIGHT!';
+        answerMsg.style.color = 'green';
+        inputEl.style.borderColor = 'lightGreen';
+    }
+    else{
+        answerMsg.textContent = `Wrong! Right answer is ${fretNum}`;
+        answerMsg.style.color = 'red';
+        inputEl.style.borderColor = 'red';
+    }
+
+    answerMsg.style.display = 'block';
 }
