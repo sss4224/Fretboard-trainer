@@ -46,6 +46,7 @@ nav{
 .advanced-settings-open-icon, .advanced-settings-close-icon{
     margin: 24px;
     font-size: 20px;
+    z-index: 100;
 }
 .advanced-settings-close-icon{
     position: absolute;
@@ -58,7 +59,7 @@ nav{
 
 .advanced-settings-page{
     height: 100vh;
-    width: 30vw;
+    width: 40vw;
     position: absolute;
     top: 0;
     transform: translateX(-100%);
@@ -129,4 +130,35 @@ h3{
 
 .save-btn{
     margin: 16px 0;
+}
+
+@media only screen and (max-width: 425px) {
+    h2{
+        margin-left: 24px;
+        visibility: hidden;
+        position: relative;
+    }
+    h2::after{
+        content: 'Advanced-\Asettings';
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        left: 19%;
+        margin-bottom: 16px;
+    }
+    
+    .advanced-settings-page{
+        transform: translateX(-110%);
+        width: 60vw;
+    }
+    
+    .choose-frets-container{
+        margin-top: 32px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    h2::after{
+        left: 10%;
+    }
 }
