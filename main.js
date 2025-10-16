@@ -5,18 +5,29 @@ const inputEl = document.querySelector('#guess-input');
 const checkEl = document.querySelector('.check-btn');
 const nextBtnEl = document.querySelector('.next-btn');
 const flatCheckEl = document.querySelector('#flat');
+const lowestFretEl = document.querySelector('#lowest-fret');
+const highestFretEl = document.querySelector('#highest-fret');
 const stringCheckboxEl = document.querySelectorAll('.strings');
 const stringInputEl = document.querySelectorAll('.string-name');
 const saveBtn = document.querySelector('.save-btn');
 
-// Strings on the guitar
+const enharmonicMap = {
+    'Db': 'C#', 'C#': 'Db',
+    'Eb': 'D#', 'D#': 'Eb',
+    'Gb': 'F#', 'F#': 'Gb',
+    'Ab': 'G#', 'G#': 'Ab',
+    'Bb': 'A#', 'A#': 'Bb',
+}
 
 let fretNum = null;
 let playString = null;
 let playNote = null;
 let rotateArray = null;
+let allInputsFilled = true;
+let allCheckboxFilled = false;
 let isFlat = flatCheck();
 let strings = getActiveStrings();
+
 
 nextBtnEl.addEventListener('click', () => {
     //Reset styles and values
@@ -24,8 +35,9 @@ nextBtnEl.addEventListener('click', () => {
     inputEl.style.borderColor = '';
     inputEl.value = '';
 
-    playString = strings[randomNumGen(strings.length)];
-    playNote = isFlat[randomNumGen(isFlat.length)];
+    playString = strings[randomNumGen(0, strings.length)];
+    //Jobbe videre herfra
+    playNote = isFlat[randomNumGen(Number(lowestFretEl.value), isFlat.length)];
     rotateArray = rotateNotes(playString);
     fretNum = rotateArray.indexOf(playNote);
     textChanger(playString, playNote);
@@ -45,51 +57,80 @@ checkEl.addEventListener('click', () => {
 })
 
 flatCheckEl.addEventListener('change', () => {
+    strings = getActiveStrings();
     isFlat = flatCheck();
     rotateArray = rotateNotes(playString);
+    playString = rotateArray[0];
     playNote = rotateArray[fretNum];
     
     textChanger(playString, playNote);
 })
 
 saveBtn.addEventListener('click', () => {
-    strings = getActiveStrings();
+    allInputsFilled = Array.from(stringInputEl).every(el => el.value !== null && el.value !== undefined && el.value !== '');
+    allCheckboxFilled = Array.from(stringCheckboxEl).every(checkbox => !checkbox.checked);
+    if(allInputsFilled && !allCheckboxFilled){
+        strings = getActiveStrings();
+    }
 })
 
-function randomNumGen(arrayLength){
-    return Math.floor(Math.random() * arrayLength);
+for(let i = 0; i < stringInputEl.length; i++){
+    stringInputEl[i].addEventListener('input', (e) => {
+        let value = e.target.value;
+        let filtered = '';
+    
+        for(let j = 0; j < value.length; j++){
+            const char = value[j];
+            if(j === 0 && 'ABCDEFG'.includes(char.toUpperCase())){
+                filtered += char.toUpperCase();
+            }
+            else if((filtered === 'C' || filtered === 'F') && char === 'b' || (filtered === 'E' || filtered === 'B') && char === '#'){
+                continue;
+            }
+            else if(j === 1 && '#b'.includes(char.toLowerCase())){
+                filtered += char.toLowerCase();
+            }
+        }
+        e.target.value = filtered;
+    })
+}
+
+function randomNumGen(min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function rotateNotes(startNote) {
-  const notes = isFlat;
-  const startIndex = notes.indexOf(startNote);
+    const notes = isFlat;
+    const startIndex = notes.indexOf(normalizeNote(startNote, flatCheckEl.checked));
 
-  // "Slice" arrayen fra start og legg til resten foran
-  return notes.slice(startIndex).concat(notes.slice(0, startIndex));
+    // "Slice" arrayen fra start og legg til resten foran
+    return notes.slice(startIndex).concat(notes.slice(0, startIndex));
 }
 
-function checkTuning(note){
-    const map = {
-        'Db': 'C#',
-        'Eb': 'D#',
-        'Gb': 'F#',
-        'Ab': 'G#',
-        'Bb': 'A#',
+function normalizeNote(note, useFlats){
+    if(useFlats && note.includes('b')) return note;
+    if(!useFlats && note.includes('#')) return note;
+
+    if(enharmonicMap[note]){
+        const alt = enharmonicMap[note];
+        return useFlats
+            ? (alt.includes('b') ? alt : note)
+            : (alt.includes('#') ? alt : note);
     }
-    return map[note] || note;
+    return note;
 }
 
 function getActiveStrings(){
     const activeStrings = [];
-
+    
     stringCheckboxEl.forEach((checkbox, index) => {
         if(checkbox.checked){
             const rawValue = stringInputEl[index].value.trim();
-            const normalized = normalizedNote(rawValue);
+            const normalized = normalizeNote(rawValue, flatCheckEl.checked);
             activeStrings.push(normalized);
         }
     })
-
+    return activeStrings;
 }
 
 function flatCheck(){
