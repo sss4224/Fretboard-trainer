@@ -58,7 +58,7 @@ nav{
 }
 
 .advanced-settings-page{
-    height: 100vh;
+    height: 100%;
     width: 40vw;
     position: absolute;
     top: 0;
@@ -73,6 +73,10 @@ nav{
 
 #advanced-settings-toggle:checked + .advanced-settings-page {
     transform: translateX(0);
+}
+
+.header-hr{
+    margin-top: 16px;
 }
 
 hr{
@@ -90,7 +94,7 @@ h3{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 16px;
+    margin: 16px 0;
 }
 
 .choose-frets-settings{
@@ -129,10 +133,10 @@ h3{
 }
 
 .save-btn{
-    margin: 16px 0;
+    margin: 16px 16px;
 }
 
-@media only screen and (max-width: 425px) {
+@media only screen and (max-width: 725px) {
     h2{
         margin-left: 24px;
         visibility: hidden;
@@ -149,16 +153,26 @@ h3{
     
     .advanced-settings-page{
         transform: translateX(-110%);
-        width: 60vw;
+        width: 40vw;
     }
     
     .choose-frets-container{
-        margin-top: 32px;
+        margin-top: 16px;
     }
 }
 
-@media only screen and (max-width: 320px){
+@media only screen and (max-width: 550px){
+    .advanced-settings-page{
+        width: 60vw;
+    }
+}
+
+@media only screen and (max-width: 370px){
     h2::after{
-        left: 10%;
+        left: 5%;
+    }
+
+    .advanced-settings-page{
+        height: 110vh;
     }
 }

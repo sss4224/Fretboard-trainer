@@ -16,7 +16,7 @@ let playString = null;
 let playNote = null;
 let rotateArray = null;
 let isFlat = flatCheck();
-let strings = checkActiveStrings();
+let strings = getActiveStrings();
 
 nextBtnEl.addEventListener('click', () => {
     //Reset styles and values
@@ -44,6 +44,18 @@ checkEl.addEventListener('click', () => {
     }
 })
 
+flatCheckEl.addEventListener('change', () => {
+    isFlat = flatCheck();
+    rotateArray = rotateNotes(playString);
+    playNote = rotateArray[fretNum];
+    
+    textChanger(playString, playNote);
+})
+
+saveBtn.addEventListener('click', () => {
+    strings = getActiveStrings();
+})
+
 function randomNumGen(arrayLength){
     return Math.floor(Math.random() * arrayLength);
 }
@@ -56,33 +68,28 @@ function rotateNotes(startNote) {
   return notes.slice(startIndex).concat(notes.slice(0, startIndex));
 }
 
-flatCheckEl.addEventListener('change', () => {
-    isFlat = flatCheck();
-    rotateArray = rotateNotes(playString);
-    playNote = rotateArray[fretNum];
-    
-    textChanger(playString, playNote);
-})
+function checkTuning(note){
+    const map = {
+        'Db': 'C#',
+        'Eb': 'D#',
+        'Gb': 'F#',
+        'Ab': 'G#',
+        'Bb': 'A#',
+    }
+    return map[note] || note;
+}
 
-saveBtn.addEventListener('click', () => {
-    strings = checkActiveStrings();
-})
-
-function checkActiveStrings(){
-
+function getActiveStrings(){
     const activeStrings = [];
 
     stringCheckboxEl.forEach((checkbox, index) => {
         if(checkbox.checked){
-            const stringValue = stringInputEl[index].value;
-            activeStrings.push(stringValue);
+            const rawValue = stringInputEl[index].value.trim();
+            const normalized = normalizedNote(rawValue);
+            activeStrings.push(normalized);
         }
     })
-    return activeStrings;
-}
 
-function checkTuning(){
-    
 }
 
 function flatCheck(){
