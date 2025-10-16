@@ -35,9 +35,9 @@ nextBtnEl.addEventListener('click', () => {
     inputEl.style.borderColor = '';
     inputEl.value = '';
 
-    playString = strings[randomNumGen(0, strings.length)];
+    playString = strings[randomNumGen(strings.length)];
     //Jobbe videre herfra
-    playNote = isFlat[randomNumGen(Number(lowestFretEl.value), isFlat.length)];
+    playNote = isFlat[randomNumGen(isFlat.length)];
     rotateArray = rotateNotes(playString);
     fretNum = rotateArray.indexOf(playNote);
     textChanger(playString, playNote);
@@ -95,8 +95,8 @@ for(let i = 0; i < stringInputEl.length; i++){
     })
 }
 
-function randomNumGen(min, max){
-    return Math.floor(Math.random() * (max - min + 1) + min);
+function randomNumGen(arraySize){
+    return Math.floor(Math.random() * arraySize);
 }
 
 function rotateNotes(startNote) {
