@@ -106,8 +106,8 @@ function randomNumGen(min, max){
     if(min >= 12){
         min = min % 12;
     }
-    if(max % 12 === 0){
-        max = 11;
+    if(max % 12 === min){
+        max = 12;
     }
     else if(max > 12){
         max = max % 12;
