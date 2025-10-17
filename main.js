@@ -34,18 +34,19 @@ nextBtnEl.addEventListener('click', () => {
     answerMsg.style.display = 'none';
     inputEl.style.borderColor = '';
     inputEl.value = '';
+    lowestFretEl.style.borderColor = '';
+    highestFretEl.style.borderColor = '';
 
-    playString = strings[randomNumGen(strings.length)];
-    //Jobbe videre herfra
-    playNote = isFlat[randomNumGen(isFlat.length)];
+    playString = strings[randomNumGen(0, strings.length)];
     rotateArray = rotateNotes(playString);
+    playNote = rotateArray[randomNumGen(Number(lowestFretEl.value), Number(highestFretEl.value))];
     fretNum = rotateArray.indexOf(playNote);
     textChanger(playString, playNote);
 })
 
 checkEl.addEventListener('click', () => {
     const val = Number(inputEl.value);
-    if(inputEl.value === '' || val < 0 || val > 24){
+    if(inputEl.value === '' || val < Number(lowestFretEl.value) || val > Number(highestFretEl.value)){
         answerFeedback(false, false);
     }
     else if(val === fretNum || val % 12 === fretNum){
@@ -95,8 +96,23 @@ for(let i = 0; i < stringInputEl.length; i++){
     })
 }
 
-function randomNumGen(arraySize){
-    return Math.floor(Math.random() * arraySize);
+function randomNumGen(min, max){
+    if(min > max){
+        lowestFretEl.style.borderColor = 'red';
+        highestFretEl.style.borderColor = 'red';
+        return;
+    }
+    if(min === 0 && max === 0) return 0;
+    if(min >= 12){
+        min = min % 12;
+    }
+    if(max % 12 === 0){
+        max = 11;
+    }
+    else if(max > 12){
+        max = max % 12;
+    }
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 function rotateNotes(startNote) {
@@ -146,8 +162,11 @@ function textChanger(string, note){
     textEl.textContent = `String: ${string} Note: ${note}`;
 }
 
-function answerFeedback(answer, text){
-    if(!text){
+function answerFeedback(answer, valid){
+    answerMsg.style.display = 'block';
+    if(!valid){
+        answerMsg.textContent = 'Not valid';
+        answerMsg.style.color = 'red';
         inputEl.style.borderColor = 'red';
         return;
     }
@@ -162,5 +181,4 @@ function answerFeedback(answer, text){
         inputEl.style.borderColor = 'red';
     }
 
-    answerMsg.style.display = 'block';
 }
