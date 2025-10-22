@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../shared-components.css">
+    <link rel="stylesheet" href="fretboard-training.css">
+    <title>Fretboard Memory</title>
+</head>
+<body>
+    <label class="sidebar-btn" id="open-sidebar" for="sidebar"><i class="fa-solid fa-bars"></i></label>
+    <input type="checkbox" name="sidebar" id="sidebar">
+    <nav>
+        <label class="sidebar-btn" id="close-sidebar" for="sidebar"><i class="fa-solid fa-xmark"></i></label>
+        <ul>
+            <li><a href="../home-page/index.html">MTT</a></li>
+            <li><a href="../fretboard-training/fretboard-training.html">Fretboard-training</a></li>
+            <li><a href="../mode-training/mode-training.html">Mode-training</a></li>
+        </ul>
+    </nav>
+    <input type="checkbox" name="advanced-settings-toggle" id="advanced-settings-toggle">
+
+
+    <div class="advanced-settings-page">
+        <label for="advanced-settings-toggle" title="Advanced-settings-close" class="advanced-settings-close-icon"><i class="fa-solid fa-xmark"></i></label>        
+        <h2>Advanced-settings</h2>
+        <hr class="header-hr">
+        <section class="choose-frets-container">
+            <h3 class="">Choose frets</h3>
+            <div class="choose-frets-settings">
+                <div class="choose-frets">
+                    <label for="lowest-fret">Start</label>
+                    <input type="number" name="lowest-fret" id="lowest-fret" min="0" max="24" value="0">
+                </div>
+                <div class="choose-frets">
+                    <label for="highest-fret">End</label>
+                    <input type="number" name="highest-fret" id="highest-fret" min="0" max="24" value="24">
+                </div>
+            </div>
+        </section>
+        <hr>
+        <section class="choose-strings-container">
+            <h3>Practice strings</h3>
+            <ul class="choose-strings-ul">
+                <li>
+                    <input type="text" maxlength="2" name="string-name" class="string-name" id="string1" value="E">
+                    <input type="checkbox" name="checkbox-string1" class="strings" checked>
+                </li>
+                <li>
+                    <input type="text" maxlength="2" name="string-name" class="string-name" id="string2" value="A">
+                    <input type="checkbox" name="checkbox-string1" class="strings" checked>
+                </li>
+                <li>
+                    <input type="text" maxlength="2" name="string-name" class="string-name" id="string3" value="D">
+                    <input type="checkbox" name="checkbox-string1" class="strings" checked>
+                </li>
+                <li>
+                    <input type="text" maxlength="2" name="string-name" class="string-name" id="string4" value="G">
+                    <input type="checkbox" name="checkbox-string1" class="strings" checked>
+                </li>
+                <li>
+                    <input type="text" maxlength="2" name="string-name" class="string-name" id="string5" value="B">
+                    <input type="checkbox" name="checkbox-string1" class="strings" checked>
+                </li>
+                <li>
+                    <input type="text" maxlength="2" name="string-name" class="string-name" id="string6" value="E">
+                    <input type="checkbox" name="checkbox-string1" class="strings" checked>
+                </li>
+            </ul>
+        </section>
+        <hr>
+        <button class="save-btn" type="submit">Save</button>
+    </div>
+
+    <main>
+        <section class="main-section">
+            <p class="question-text">Find the note on the fretboard</p>
+            <p class="answer-msg"></p>
+            <input type="number" min="0" id="guess-input">
+            <button class="check-btn">Check</button>
+            <button class="next-btn">Next</button>
+            <div class="flat-container">
+                <label for="flat">Flat</label>
+                <input type="checkbox" name="flat" id="flat">
+            </div>
+            <label for="advanced-settings-toggle" title="Advanced-settings-open" class="advanced-settings-open-icon"><i class="fa-solid fa-gear"></i></label>
+        </section>
+    </main>
+
+    <script src="https://kit.fontawesome.com/3887c28c13.js" crossorigin="anonymous"></script>
+    <script src="fretboard-training.js"></script>
+</body>
+</html>
