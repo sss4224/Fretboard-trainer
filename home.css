@@ -1,11 +1,4 @@
-:root{
-    --link-container-size: 10vw;
-    --primary-color: rgb(231, 231, 231);
-}
 
-body, html{
-    height: 100%;
-}
 
 body{
     display: flex;
@@ -13,61 +6,49 @@ body{
 }
 
 main{
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 24px;
     text-align: center;
-    padding: 32px;
-    margin-top: 64px;
 }
 
-.description p, .support p{
-    max-width: 600px;
-    font-size: 1.2rem;
-    line-height: 1.6;
+header{
+    margin-bottom: 24px;
 }
 
-.description{
-    text-align: start;
-}
-
-.bulletpoint{
-    display: list-item;
-    list-style-position: inside;
-    padding-left: 1.5rem;
-}
-
-.trainer-name{
-    font-weight: bold;
-}
-
-.support p{
-    opacity: .7;
-    margin-top: 32px;
-}
-
-.support-btn{
-    padding: 12px;
-    margin-bottom: 32px;
-    background-color: var(--primary-color);
-    border: 1px solid gray;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.support-btn:hover{
-    background-color: rgb(221, 221, 221);
-}
-
-.support-btn a{
-    color: black;
+.training-link{
     text-decoration: none;
 }
 
+.training-container{
+    min-width: 60vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(75px, 220px));
+    gap: 24px;
+    justify-content: center;
+    text-align: center;
+}
 
-@media only screen and (max-width: 345px){
-    main{
-        margin-top: 156px;
-    }
+.training-card-container{
+    text-decoration: none;
+    color: #333;
+    background-color: var(--button-c);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+    text-align: center;
+}
+.training-card-container:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.training-card-container .training-link-p{
+    color: white;
+    font-weight: bold;
+    padding: 12px;
 }

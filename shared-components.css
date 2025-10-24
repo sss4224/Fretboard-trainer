@@ -3,13 +3,16 @@
     --nav-hc: rgb(221, 221, 221);
     --text-color: black;
     --body-bgc: linear-gradient(to left, rgb(83, 83, 238), lightblue);
+    --button-c: rgb(40, 60, 180);
+    --button-hc: rgb(31, 47, 138);
 }
 
 body{
+    background: var(--body-bgc);
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background: var(--body-bgc);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #sidebar{
