@@ -51,13 +51,16 @@ nav li:first-child:hover{
     scale: 1.3;
 }
 nav li:not(:first-child):hover{
-    background-color: var(--nav-hc);
+    background-color: var(--button-c);
 }
 
 nav a{
     text-decoration: none;
     color: var(--text-color);
     padding: 12px 24px;
+}
+nav li:not(:first-child):hover a{
+    color: white;
 }
 
 @media only screen and (max-width: 725px){
@@ -76,7 +79,8 @@ nav a{
     
     nav{
         height: 100vh;
-        width: fit-content;
+        min-width: fit-content;
+        width: 60%;
         display: flex;
         flex-direction: column;
         justify-content: center;
