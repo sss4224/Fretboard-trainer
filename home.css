@@ -1,13 +1,14 @@
 
 
+
 body{
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 main{
-    min-height: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,6 +19,7 @@ main{
 
 header{
     margin-bottom: 24px;
+    cursor: default;
 }
 
 .training-link{
@@ -52,4 +54,10 @@ header{
     color: white;
     font-weight: bold;
     padding: 12px;
+}
+
+@media only screen and (max-width: 725px){
+    main{
+        justify-content: flex-start;
+    }
 }
