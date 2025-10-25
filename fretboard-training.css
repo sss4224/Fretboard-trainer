@@ -1,0 +1,197 @@
+body, html{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.main-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5%;
+    box-shadow: 0 0 5px gray;
+    padding: 20px;
+    background: var(--nav-mc);
+}
+
+.question-text{
+    font-size: 24px;
+    font-weight: bold;
+    cursor: default;
+}
+
+.answer-msg{
+    display: none;
+    margin-top: 0;
+    font-weight: bold;
+}
+
+#guess-input{
+    padding: 8px;
+    border: 2px solid black;
+    border-radius: 12px;
+}
+
+button{
+    margin-top: 8px;
+    padding: 12px;
+    width: 40%;
+    background-color: var(--button-c);
+    color: white;
+    border: none;
+    border-radius: 12px;
+}
+button:hover{
+    background-color: var(--button-hc);
+}
+
+.flat-container{
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    font-size: 20px;
+}
+
+.advanced-settings-close-icon{
+    position: absolute;
+    align-self: flex-end;
+    margin: 24px;
+    font-size: 20px;
+    z-index: 100;
+}
+
+.advanced-settings-open-icon{
+    margin-top: 16px;
+}
+
+#advanced-settings-toggle, #advanced-settings-close{
+    display: none;
+}
+
+.advanced-settings-page{
+    background: var(--nav-mc);
+    width: 400px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5%;
+    box-shadow: 0 0 5px gray;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#advanced-settings-toggle:checked + .advanced-settings-page {
+    display: flex;
+}
+#advanced-settings-toggle:checked ~ main{
+    display: none;
+}
+#advanced-settings-toggle + main{
+    display: flex;
+}
+
+.header-hr{
+    margin-top: 16px;
+}
+
+hr{
+    border-top: 1px solid ccc;
+    margin: 0;
+    margin-right: 3px;
+    width: 100%;
+}
+
+h3{
+    margin: 0 0 12px 0;
+}
+
+.choose-frets-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.choose-frets-settings{
+    display: flex;
+    flex-direction: row;
+}
+
+.choose-frets{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 4px;
+}
+
+.choose-strings-container{
+    margin: 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.choose-strings-ul > li{
+    display: flex;
+    justify-content: center;
+    padding: 2px;
+}
+
+.choose-strings-ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.choose-strings-ul > li > input[type="text"]{
+    width: 30%;
+    text-align: center;
+}
+
+.save-btn{
+    margin: 16px 16px;
+}
+
+@media only screen and (max-width: 725px) {
+    h2{
+        margin-left: 24px;
+        visibility: hidden;
+        position: relative;
+    }
+    h2::after{
+        content: 'Advanced-\Asettings';
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        left: 19%;
+        margin-bottom: 16px;
+    }
+    
+    .choose-frets-container{
+        margin-top: 16px;
+    }
+
+    button{
+        max-width: 136.52px;
+        width:70%;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .advanced-settings-page{
+        width: 80vw;
+    }
+}
